@@ -1,0 +1,35 @@
+task hello {
+    println 'Hello world!'
+    println "Project name: ${project.name}"
+}
+
+task test01 {
+    group = 'Welcome'
+    description = '欢迎欢迎'
+
+    doLast {
+        println '你好中国！'
+    }
+}
+
+class Greeting extends DefaultTask {  
+    String message 
+    String recipient
+
+    @TaskAction 
+    void sayGreeting() {
+        println "${message}, ${recipient}!" 
+    }
+}
+
+tasks.register("test02", Greeting) { 
+    group = 'Welcome'
+    description = 'Produces a world greeting'
+    message = '测试二' 
+    recipient = '欢迎使用gradle'
+}
+
+task copy(type: Copy, group: "Custom", description: "Copies sources to the dest directory") {
+    from "src"
+    into "dest"
+}
